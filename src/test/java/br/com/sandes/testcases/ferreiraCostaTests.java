@@ -69,7 +69,7 @@ public class ferreiraCostaTests {
     }
 
     @Test
-    @DisplayName("Validate that is possible to add products on cart")
+    @DisplayName("Validate that is possible to remove products from cart")
     void canRemoveProductsOnCartTest(){
 
         testUtils.searchForProduct("Travesseiro Antistress");
