@@ -2,7 +2,9 @@ package br.com.sandes.methods;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 
 public class TestUtils {
 
@@ -36,7 +38,18 @@ public class TestUtils {
                 "//div[@data-cy='product-card-info-container' and contains(., '" + productName + "')]")).click();
     }
 
-    public void goToCart(){
+    public void removeFromCart(){
+        driver.findElement(By.xpath("//button[@data-cy='button-icon-card-container']")).click();
+    }
 
+    public void finishPurchase(){
+        driver.findElement(By.xpath("//button[@data-testid='box-details-info-button-success']")).click();
+    }
+
+    public void scrollToProduct(String productName){
+
+        WebElement element = driver.findElement(By.xpath("//section[@data-testid='product-card-info-area']/div/h3[contains(text(), '" + productName + "')]"));
+
+        new Actions(driver).scrollToElement(element).perform();
     }
 }
