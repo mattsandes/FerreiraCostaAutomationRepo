@@ -1,34 +1,36 @@
 package br.com.sandes.testcases;
 
 import br.com.sandes.methods.TestUtils;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import net.bytebuddy.build.Plugin;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 
+import javax.swing.*;
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ferreiraCostaTests {
 
     private static WebDriver driver;
     private static TestUtils testUtils;
 
-    @BeforeAll
-    static void setUp(){
-        driver = new ChromeDriver();
+    @BeforeEach
+    void setUp(){
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("disable-infobars");
+        driver = new ChromeDriver(options);
         testUtils = new TestUtils(driver);
         driver.manage().window().setSize(new Dimension(1200, 765));
         driver.get("https://www.ferreiracosta.com/");
         testUtils.closeCookiesModal();
     }
 
-    @AfterAll
-    static void tearDown() throws Exception{
+    @AfterEach
+    void tearDown() throws Exception{
         driver.quit();
     }
 
@@ -83,7 +85,29 @@ public class ferreiraCostaTests {
         assertTrue(driver.findElement(
                 By.xpath("//section[@data-cy='box-details-product']"))
                 .getText()
-                    .contains("Travesseiro"));
+                    .contains("Travesseiro Antistress"));
 
+        testUtils.removeFromCart();
+
+        assertTrue(
+                driver.findElement(By.xpath("//h1[@data-cy='text-cart-empty']"))
+                        .isDisplayed());
+    }
+
+    @Test
+    @DisplayName("Validate that is possible to make a checkout at site")
+    void canMakeACheckout(){
+
+        testUtils.searchForProduct("Cadeira");
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+
+        testUtils.scrollToProduct("Cadeira Tramontina Plástica");
+
+        testUtils.selectProduct("Cadeira Tramontina Plástica");
+
+        testUtils.addToCart();
+
+        testUtils.finishPurchase();
     }
 }
