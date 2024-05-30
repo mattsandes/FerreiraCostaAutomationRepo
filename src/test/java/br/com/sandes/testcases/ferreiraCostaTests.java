@@ -1,17 +1,19 @@
 package br.com.sandes.testcases;
 
 import br.com.sandes.methods.TestUtils;
-import net.bytebuddy.build.Plugin;
-import org.junit.jupiter.api.*;
-import org.openqa.selenium.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Actions;
 
-import javax.swing.*;
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ferreiraCostaTests {
 
